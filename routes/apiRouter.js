@@ -2,21 +2,19 @@ let Router = require('express').Router;
 const apiRouter = Router()
 
 /*
- * NOTE: the model for the data-table should not have the name 'Resource'
+ * Note: the model for the data-table should not have the name 'Resource'
  */
 let Resource = require('../db/schema.js').Resource
 
 apiRouter
-/*
- * NOTE: the route should have a name that matches the name of the data-table
- */
- .get('/resources', function(req, res){
+ .get('/products', function(req, res){
    Resource.find(req.query , function(err, results){
      if(err) return res.json(err)
      res.json(results)
    })
  })
- .post('/resources', function(req, res){
+
+ .post('/products', function(req, res){
      let newRecord = new Resource(req.body)
 
      newRecord.save(function(err, record){
@@ -29,14 +27,14 @@ apiRouter
 
 
 apiRouter
- .get('/resources/:_id', function(req, res){
+ .get('/products/:_id', function(req, res){
    Resource.findById(req.params._id, "-password", function(err, record){
      if(err || !record ) return res.json(err)
      res.json(record)
    })
  })
 
- .put('/resources/:_id', function(req, res){
+ .put('/products/:_id', function(req, res){
 
    Resource.findByIdAndUpdate(req.params._id, req.body, function(err, record){
        if (err) {
@@ -51,7 +49,7 @@ apiRouter
    })
  })
 
- .delete('/resources/:_id', function(req, res){
+ .delete('/products/:_id', function(req, res){
    Resource.remove({ _id: req.params._id}, (err) => {
      if(err) return res.json(err)
      res.json({
